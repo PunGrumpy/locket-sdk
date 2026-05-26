@@ -2,7 +2,7 @@ import { defineConfig } from "vite-plus";
 
 export default defineConfig({
   staged: {
-    "*.{js,ts,tsx,md}": "vp check --fix",
+    "*": "vp check --fix",
   },
   lint: {
     ignorePatterns: ["dist", "build", "node_modules"],
