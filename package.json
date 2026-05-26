@@ -2,43 +2,53 @@
   "name": "locket-api",
   "version": "1.0.0",
   "description": "Unofficial TypeScript SDK for the Locket Camera (1020x1020) API",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "keywords": [
+    "locket",
+    "locket-api",
+    "locket-camera",
+    "locket-sdk",
+    "social",
+    "typescript",
+    "widget"
+  ],
+  "license": "MIT",
+  "author": "",
   "files": [
     "dist",
     "README.md",
     "LICENSE"
   ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "tsx watch examples/playground.ts",
     "start": "tsx examples/playground.ts",
     "build": "tsc",
     "build:watch": "tsc --watch",
+    "check": "vp check",
+    "fix": "vp check --fix",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepare": "vp config"
   },
-  "keywords": [
-    "locket",
-    "locket-camera",
-    "locket-api",
-    "locket-sdk",
-    "social",
-    "widget",
-    "typescript"
-  ],
-  "author": "",
-  "license": "MIT",
   "dependencies": {
     "axios": "^1.7.0"
   },
   "devDependencies": {
     "@types/node": "^20.19.41",
     "tsx": "^4.7.0",
-    "typescript": "^5.4.0"
+    "typescript": "^5.4.0",
+    "vite-plus": "latest"
+  },
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
   },
   "engines": {
-    "node": ">=16"
-  }
+    "bun": ">=1",
+    "node": ">=18"
+  },
+  "packageManager": "bun@1.3.14"
 }
