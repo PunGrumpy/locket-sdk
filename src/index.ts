@@ -1,14 +1,7 @@
 export { Locket } from "./locket";
-export type {
-  LocketOptions,
-  GetLatestMomentsOptions,
-} from "./locket";
+export type { LocketOptions, GetLatestMomentsOptions } from "./locket";
 
-export type {
-  FriendDocument,
-  FriendDocumentFields,
-  FirestoreListResponse,
-} from "./modules";
+export type { FriendDocument, FriendDocumentFields, FirestoreListResponse } from "./modules";
 
 export { LocketError } from "./errors";
 
