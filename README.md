@@ -90,10 +90,7 @@ const feed: GetLatestMomentsResponse = await locket.getLatestMoments(friends);
 // 3) React to the first one with any text (emoji or plain text)
 const moment = feed.result.data[0];
 if (moment) {
-  const res: ReactToMomentResponse = await locket.react(
-    moment.canonical_uid,
-    "Nice!",
-  );
+  const res: ReactToMomentResponse = await locket.react(moment.canonical_uid, "Nice!");
   if (res.result.status !== 200) {
     console.warn("react failed:", res.result.errors);
   }
@@ -115,23 +112,23 @@ console.dir(info, { depth: null, maxArrayLength: null });
 
 ## API at a glance
 
-| Group       | Method                                                          | Endpoint                                        |
-| ----------- | --------------------------------------------------------------- | ----------------------------------------------- |
-| **Auth**    | `signInWithEmail(email, password)`                              | `POST /verifyPassword` (Google IDT)             |
-|             | `signInWithPhone(phone, password)`                              | `POST /signInWithPhonePassword` + `verifyCustomToken` |
-|             | `signInWithPhonePassword(phone, password)`                      | `POST /signInWithPhonePassword`                 |
-|             | `exchangeCustomToken(customToken)`                              | `POST /verifyCustomToken` (Google IDT)          |
-|             | `refreshToken(refreshToken?)`                                   | `POST /securetoken/v1/token`                    |
-|             | `getAccountInfo(idToken?)` · `getMe()`                          | `POST /getAccountInfo` (Google IDT)             |
-|             | `getSession()` · `setSession(s)` · `isAuthenticated()` · `signOut()` | (in-memory)                                |
-| **Moments** | `getLatestMoments(users?, options?)`                            | `POST /getLatestMomentV2`                       |
-|             | `react(momentUid, reaction)`                                    | `POST /reactToMoment`                           |
-|             | `deleteMoment(momentUid, ownerUid, deleteGlobally?)`            | `POST /deleteMomentV2`                          |
-|             | `getMomentViews(momentUid)` ★ **Locket Gold**                   | `POST /getMomentViews`                          |
-| **Users**   | `fetchUser(userUid)`                                            | `POST /fetchUserV2`                             |
-| **Friends** | `listFriends(userUid?)`                                         | `GET /firestore … /users/{uid}/friends`         |
-|             | `listFriendsDetailed(userUid?)` (parsed `Date`s)                | same as above                                   |
-|             | `listFriendsRaw(userUid?)` (raw Firestore docs)                 | same as above                                   |
+| Group       | Method                                                               | Endpoint                                              |
+| ----------- | -------------------------------------------------------------------- | ----------------------------------------------------- |
+| **Auth**    | `signInWithEmail(email, password)`                                   | `POST /verifyPassword` (Google IDT)                   |
+|             | `signInWithPhone(phone, password)`                                   | `POST /signInWithPhonePassword` + `verifyCustomToken` |
+|             | `signInWithPhonePassword(phone, password)`                           | `POST /signInWithPhonePassword`                       |
+|             | `exchangeCustomToken(customToken)`                                   | `POST /verifyCustomToken` (Google IDT)                |
+|             | `refreshToken(refreshToken?)`                                        | `POST /securetoken/v1/token`                          |
+|             | `getAccountInfo(idToken?)` · `getMe()`                               | `POST /getAccountInfo` (Google IDT)                   |
+|             | `getSession()` · `setSession(s)` · `isAuthenticated()` · `signOut()` | (in-memory)                                           |
+| **Moments** | `getLatestMoments(users?, options?)`                                 | `POST /getLatestMomentV2`                             |
+|             | `react(momentUid, reaction)`                                         | `POST /reactToMoment`                                 |
+|             | `deleteMoment(momentUid, ownerUid, deleteGlobally?)`                 | `POST /deleteMomentV2`                                |
+|             | `getMomentViews(momentUid)` ★ **Locket Gold**                        | `POST /getMomentViews`                                |
+| **Users**   | `fetchUser(userUid)`                                                 | `POST /fetchUserV2`                                   |
+| **Friends** | `listFriends(userUid?)`                                              | `GET /firestore … /users/{uid}/friends`               |
+|             | `listFriendsDetailed(userUid?)` (parsed `Date`s)                     | same as above                                         |
+|             | `listFriendsRaw(userUid?)` (raw Firestore docs)                      | same as above                                         |
 
 ---
 
@@ -139,17 +136,17 @@ console.dir(info, { depth: null, maxArrayLength: null });
 
 ```ts
 new Locket({
-  session: { idToken, refreshToken },     // restore a previous session
-  timeout: 20_000,                         // axios timeout in ms (default 30s)
-  userAgent: "MyApp/1.0",                  // overrides default iOS UA
-  defaultHeaders: { "x-app": "myapp" },    // attached to every request
+  session: { idToken, refreshToken }, // restore a previous session
+  timeout: 20_000, // axios timeout in ms (default 30s)
+  userAgent: "MyApp/1.0", // overrides default iOS UA
+  defaultHeaders: { "x-app": "myapp" }, // attached to every request
   auth: {
-    firebaseApiKey: "AIza...",             // override Locket's public key
-    iosBundleId:    "com.example.MyApp",
-    clientType:     "CLIENT_TYPE_ANDROID", // default is CLIENT_TYPE_IOS
+    firebaseApiKey: "AIza...", // override Locket's public key
+    iosBundleId: "com.example.MyApp",
+    clientType: "CLIENT_TYPE_ANDROID", // default is CLIENT_TYPE_IOS
   },
   friends: {
-    projectId: "locket-4252a",             // Firestore project id
+    projectId: "locket-4252a", // Firestore project id
   },
 });
 ```
@@ -254,6 +251,7 @@ const res = await locket.signInWithEmail("you@example.com", "password");
 ### `signInWithPhone(phone, password)`
 
 **Two calls under the hood:**
+
 1. `POST https://api.locketcamera.com/signInWithPhonePassword`
 2. `POST https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyCustomToken`
 
@@ -263,10 +261,10 @@ the resulting JWT.
 ```ts
 const { phone, identity } = await locket.signInWithPhone("+66xxxxxxxxx", "password");
 
-phone.result.token;        // raw Firebase custom token
-identity.idToken;          // Bearer token
+phone.result.token; // raw Firebase custom token
+identity.idToken; // Bearer token
 identity.refreshToken;
-identity.expiresIn;        // "3600"
+identity.expiresIn; // "3600"
 identity.isNewUser;
 ```
 
@@ -283,8 +281,8 @@ does **not** touch the session.
 
 ```ts
 const res = await locket.signInWithPhonePassword("+66xxxxxxxxx", "password");
-res.result.token;   // present on success
-res.result.status;  // 200 on success, 400 on bad credentials
+res.result.token; // present on success
+res.result.status; // 200 on success, 400 on bad credentials
 ```
 
 ### `exchangeCustomToken(customToken)`
@@ -296,7 +294,10 @@ mutate the session.
 
 ```ts
 const res = await locket.exchangeCustomToken("eyJhbGciOi…");
-res.idToken; res.refreshToken; res.expiresIn; res.isNewUser;
+res.idToken;
+res.refreshToken;
+res.expiresIn;
+res.isNewUser;
 ```
 
 **Failure** — throws `LocketError` (HTTP 400, e.g. `INVALID_CUSTOM_TOKEN`).
@@ -309,7 +310,11 @@ Refreshes the session in place. Uses the stored refresh token by default.
 
 ```ts
 const r = await locket.refreshToken();
-r.id_token; r.refresh_token; r.expires_in; r.user_id; r.project_id;
+r.id_token;
+r.refresh_token;
+r.expires_in;
+r.user_id;
+r.project_id;
 ```
 
 **Failure** — throws `LocketError` (HTTP 400, `INVALID_REFRESH_TOKEN`).
@@ -328,7 +333,10 @@ info.users[0]?.customAttributes; // e.g. '{"revenueCatEntitlements":["Gold"]}'
 
 ```ts
 const me = await locket.getMe();
-me?.localId;  me?.email;  me?.phoneNumber;  me?.lastRefreshAt;
+me?.localId;
+me?.email;
+me?.phoneNumber;
+me?.lastRefreshAt;
 ```
 
 **Failure** — throws `LocketError` (HTTP 400, `INVALID_ID_TOKEN`).
@@ -337,7 +345,7 @@ me?.localId;  me?.email;  me?.phoneNumber;  me?.lastRefreshAt;
 
 ```ts
 locket.isAuthenticated();
-locket.getSession();              // AuthSession | null
+locket.getSession(); // AuthSession | null
 locket.setSession({ idToken, refreshToken });
 locket.signOut();
 ```
@@ -380,9 +388,9 @@ const feed = await locket.getLatestMoments();
 
 // Specific friends, with paging and exclusions
 const feed = await locket.getLatestMoments(["FRIEND_UID_1"], {
-  excludedUsers:            ["BLOCKED_UID"],
-  lastFetch:                Date.now() - 24 * 60 * 60 * 1000,
-  syncToken:                "psSVRI9EWZ5sNMLu9PzQ",
+  excludedUsers: ["BLOCKED_UID"],
+  lastFetch: Date.now() - 24 * 60 * 60 * 1000,
+  syncToken: "psSVRI9EWZ5sNMLu9PzQ",
   shouldCountMissedMoments: true,
 });
 ```
@@ -451,7 +459,7 @@ moment only from your own feed.
 ```ts
 const res = await locket.deleteMoment(
   "mKPhGseit5sdWTotqoIr",
-  "4YUPPNLIobR0ieQnH1V8DU7ZCVq1",   // owner UID — usually your own
+  "4YUPPNLIobR0ieQnH1V8DU7ZCVq1", // owner UID — usually your own
 );
 ```
 
@@ -582,17 +590,17 @@ For transparency, here's everything the SDK fills in for you. Each row is
 either fully fixed (the API only accepts one value) or configurable via the
 `Locket` constructor.
 
-| Field                              | Default                                                    | How to override                                |
-| ---------------------------------- | ---------------------------------------------------------- | ---------------------------------------------- |
-| `User-Agent`                       | `com.locket.Locket.LocketWidget/1.100.0 iPhone/18.2 …`     | `new Locket({ userAgent })`                    |
-| `x-ios-bundle-identifier`          | `com.locket.Locket`                                        | `new Locket({ auth: { iosBundleId } })`        |
-| Firebase API key (`?key=`)         | `AIzaSyCQngaaXQIfJaH0aS2l7REgIjD7nL431So`                  | `new Locket({ auth: { firebaseApiKey } })`     |
-| Firestore project                  | `locket-4252a`                                             | `new Locket({ friends: { projectId } })`       |
-| `clientType` (sign-in)             | `CLIENT_TYPE_IOS`                                          | `new Locket({ auth: { clientType } })`         |
-| `returnSecureToken`                | `true` (always)                                            | not exposed — fixed                            |
-| `grantType` (refresh)              | `"refresh_token"` (always)                                 | not exposed — fixed                            |
-| `should_count_missed_moments`      | `true`                                                     | `getLatestMoments(_, { shouldCountMissedMoments })` |
-| `delete_globally`                  | `true`                                                     | `deleteMoment(_, _, false)`                    |
+| Field                         | Default                                                | How to override                                     |
+| ----------------------------- | ------------------------------------------------------ | --------------------------------------------------- |
+| `User-Agent`                  | `com.locket.Locket.LocketWidget/1.100.0 iPhone/18.2 …` | `new Locket({ userAgent })`                         |
+| `x-ios-bundle-identifier`     | `com.locket.Locket`                                    | `new Locket({ auth: { iosBundleId } })`             |
+| Firebase API key (`?key=`)    | `AIzaSyCQngaaXQIfJaH0aS2l7REgIjD7nL431So`              | `new Locket({ auth: { firebaseApiKey } })`          |
+| Firestore project             | `locket-4252a`                                         | `new Locket({ friends: { projectId } })`            |
+| `clientType` (sign-in)        | `CLIENT_TYPE_IOS`                                      | `new Locket({ auth: { clientType } })`              |
+| `returnSecureToken`           | `true` (always)                                        | not exposed — fixed                                 |
+| `grantType` (refresh)         | `"refresh_token"` (always)                             | not exposed — fixed                                 |
+| `should_count_missed_moments` | `true`                                                 | `getLatestMoments(_, { shouldCountMissedMoments })` |
+| `delete_globally`             | `true`                                                 | `deleteMoment(_, _, false)`                         |
 
 ---
 
@@ -634,11 +642,11 @@ if (res.result.status !== 200) {
 
 **Failure-surface cheat sheet:**
 
-| Endpoint                                                                 | How failure surfaces        |
-| ------------------------------------------------------------------------ | --------------------------- |
-| `verifyPassword`, `verifyCustomToken`, `getAccountInfo`, `securetoken/token`, `firestore` | HTTP 4xx → throws `LocketError`            |
-| `signInWithPhonePassword` (via `signInWithPhone`)                        | HTTP 200, inner `status !== 200` → SDK throws `LocketError` |
-| `fetchUser`, `react`, `deleteMoment`, `getMomentViews`                   | HTTP 200, body contains `result.errors` → SDK **returns** the body |
+| Endpoint                                                                                  | How failure surfaces                                               |
+| ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `verifyPassword`, `verifyCustomToken`, `getAccountInfo`, `securetoken/token`, `firestore` | HTTP 4xx → throws `LocketError`                                    |
+| `signInWithPhonePassword` (via `signInWithPhone`)                                         | HTTP 200, inner `status !== 200` → SDK throws `LocketError`        |
+| `fetchUser`, `react`, `deleteMoment`, `getMomentViews`                                    | HTTP 200, body contains `result.errors` → SDK **returns** the body |
 
 ---
 

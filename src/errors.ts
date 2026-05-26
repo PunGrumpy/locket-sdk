@@ -23,8 +23,7 @@ export class LocketError extends Error {
       const data = error.response?.data as
         | { error?: { message?: string; code?: string | number } }
         | undefined;
-      const message =
-        data?.error?.message ?? error.message ?? "Unknown Locket API error";
+      const message = data?.error?.message ?? error.message ?? "Unknown Locket API error";
       return new LocketError(message, {
         status: error.response?.status,
         code: data?.error?.code ?? error.code,

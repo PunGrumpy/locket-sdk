@@ -1,8 +1,4 @@
-import axios, {
-  AxiosInstance,
-  AxiosRequestConfig,
-  InternalAxiosRequestConfig,
-} from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 import { DEFAULT_USER_AGENT } from "./constants";
 import { LocketError } from "./errors";
 
@@ -75,19 +71,11 @@ export class HttpClient {
     return this.request<T>({ ...config, method: "GET", url });
   }
 
-  post<T>(
-    url: string,
-    body?: unknown,
-    config?: LocketRequestConfig,
-  ): Promise<T> {
+  post<T>(url: string, body?: unknown, config?: LocketRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: "POST", url, data: body });
   }
 
-  put<T>(
-    url: string,
-    body?: unknown,
-    config?: LocketRequestConfig,
-  ): Promise<T> {
+  put<T>(url: string, body?: unknown, config?: LocketRequestConfig): Promise<T> {
     return this.request<T>({ ...config, method: "PUT", url, data: body });
   }
 }
