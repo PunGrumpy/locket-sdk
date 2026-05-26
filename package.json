@@ -18,18 +18,24 @@
     "README.md",
     "LICENSE"
   ],
-  "main": "dist/index.js",
+  "main": "dist/index.mjs",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
   "scripts": {
     "dev": "tsx watch examples/playground.ts",
     "start": "tsx examples/playground.ts",
-    "build": "tsc",
-    "build:watch": "tsc --watch",
+    "build": "vp pack",
+    "build:watch": "vp pack --watch",
     "check": "vp check",
     "fix": "vp check --fix",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build",
+    "prepublishOnly": "npm run clean && vp pack",
     "typecheck": "tsc --noEmit",
     "prepare": "vp config"
   },
