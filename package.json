@@ -1,0 +1,44 @@
+{
+  "name": "locket-api",
+  "version": "1.0.0",
+  "description": "Unofficial TypeScript SDK for the Locket Camera (1020x1020) API",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "tsx watch examples/playground.ts",
+    "start": "tsx examples/playground.ts",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "locket",
+    "locket-camera",
+    "locket-api",
+    "locket-sdk",
+    "social",
+    "widget",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.41",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}
