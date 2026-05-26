@@ -29,7 +29,9 @@ export interface AuthModuleOptions {
   clientType?: string;
 }
 
-function computeExpiresAt(expiresIn: string | number | undefined): number | undefined {
+function computeExpiresAt(
+  expiresIn: string | number | undefined
+): number | undefined {
   if (expiresIn === undefined) return undefined;
   const seconds = typeof expiresIn === "string" ? Number(expiresIn) : expiresIn;
   if (!Number.isFinite(seconds)) return undefined;
@@ -53,7 +55,7 @@ export class AuthModule {
   constructor(
     private readonly http: HttpClient,
     private readonly session: SessionStore,
-    options: AuthModuleOptions = {},
+    options: AuthModuleOptions = {}
   ) {
     this.firebaseApiKey = options.firebaseApiKey ?? LOCKET_FIREBASE_API_KEY;
     this.iosBundleId = options.iosBundleId ?? DEFAULT_IOS_BUNDLE_ID;
@@ -70,12 +72,14 @@ export class AuthModule {
    * Both raw responses are returned so callers can inspect every field.
    * On success the session is populated.
    */
-  async signInWithPhone(input: SignInWithPhoneInput): Promise<PhoneSignInResult> {
+  async signInWithPhone(
+    input: SignInWithPhoneInput
+  ): Promise<PhoneSignInResult> {
     const phone = await this.signInWithPhonePassword(input);
     if (phone.result?.status !== 200 || !phone.result?.token) {
       throw new LocketError(
         `signInWithPhonePassword failed (inner status ${phone.result?.status ?? "unknown"})`,
-        { status: phone.result?.status, response: phone },
+        { status: phone.result?.status, response: phone }
       );
     }
 
@@ -95,11 +99,13 @@ export class AuthModule {
    * Low-level: call `POST /signInWithPhonePassword` only and return the raw body.
    * Useful if you want to handle the custom-token exchange yourself.
    */
-  async signInWithPhonePassword(input: SignInWithPhoneInput): Promise<PhoneSignInResponse> {
+  async signInWithPhonePassword(
+    input: SignInWithPhoneInput
+  ): Promise<PhoneSignInResponse> {
     return this.http.post<PhoneSignInResponse>(
       `${LOCKET_API_BASE_URL}/signInWithPhonePassword`,
       { data: { phone: input.phone, password: input.password } },
-      { skipAuth: true },
+      { skipAuth: true }
     );
   }
 
@@ -107,7 +113,9 @@ export class AuthModule {
    * Sign in directly through Firebase email/password (`verifyPassword`).
    * Populates the session and returns the full Firebase response body.
    */
-  async signInWithEmail(input: SignInWithEmailInput): Promise<EmailSignInResponse> {
+  async signInWithEmail(
+    input: SignInWithEmailInput
+  ): Promise<EmailSignInResponse> {
     const response = await this.http.post<EmailSignInResponse>(
       `${GOOGLE_IDENTITY_TOOLKIT_URL}/verifyPassword`,
       {
@@ -120,7 +128,7 @@ export class AuthModule {
         skipAuth: true,
         params: { key: this.firebaseApiKey },
         headers: { "x-ios-bundle-identifier": this.iosBundleId },
-      },
+      }
     );
 
     this.session.set({
@@ -138,7 +146,9 @@ export class AuthModule {
    * Exchange a Firebase custom token for an `idToken` + `refreshToken`.
    * Does NOT touch the session — caller decides what to do with the result.
    */
-  async exchangeCustomToken(customToken: string): Promise<VerifyCustomTokenResponse> {
+  async exchangeCustomToken(
+    customToken: string
+  ): Promise<VerifyCustomTokenResponse> {
     return this.http.post<VerifyCustomTokenResponse>(
       `${GOOGLE_IDENTITY_TOOLKIT_URL}/verifyCustomToken`,
       { token: customToken, returnSecureToken: true },
@@ -146,7 +156,7 @@ export class AuthModule {
         skipAuth: true,
         params: { key: this.firebaseApiKey },
         headers: { "x-ios-bundle-identifier": this.iosBundleId },
-      },
+      }
     );
   }
 
@@ -155,7 +165,8 @@ export class AuthModule {
    */
   async getAccountInfo(idToken?: string): Promise<GetAccountInfoResponse> {
     const token = idToken ?? this.session.getIdToken();
-    if (!token) throw new LocketError("Not authenticated: no idToken available");
+    if (!token)
+      throw new LocketError("Not authenticated: no idToken available");
 
     return this.http.post<GetAccountInfoResponse>(
       `${GOOGLE_IDENTITY_TOOLKIT_URL}/getAccountInfo`,
@@ -164,7 +175,7 @@ export class AuthModule {
         skipAuth: true,
         params: { key: this.firebaseApiKey },
         headers: { "x-ios-bundle-identifier": this.iosBundleId },
-      },
+      }
     );
   }
 
@@ -183,7 +194,7 @@ export class AuthModule {
         skipAuth: true,
         params: { key: this.firebaseApiKey },
         headers: { "x-ios-bundle-identifier": this.iosBundleId },
-      },
+      }
     );
 
     this.session.update({

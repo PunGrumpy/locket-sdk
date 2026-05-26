@@ -1,5 +1,6 @@
 import { LOCKET_API_BASE_URL } from "../constants";
 import { HttpClient } from "../http";
+import type { RequestOptions } from "../types/common";
 import type {
   DeleteMomentInput,
   DeleteMomentResponse,
@@ -9,7 +10,6 @@ import type {
   ReactToMomentInput,
   ReactToMomentResponse,
 } from "../types/moment";
-import type { RequestOptions } from "../types/common";
 import { int64 } from "../utils";
 
 export class MomentsModule {
@@ -20,7 +20,7 @@ export class MomentsModule {
    */
   async getLatest(
     input: GetLatestMomentsInput = {},
-    options?: RequestOptions,
+    options?: RequestOptions
   ): Promise<GetLatestMomentsResponse> {
     const data: Record<string, unknown> = {
       excluded_users: input.excludedUsers ?? [],
@@ -33,7 +33,7 @@ export class MomentsModule {
     return this.http.post<GetLatestMomentsResponse>(
       `${LOCKET_API_BASE_URL}/getLatestMomentV2`,
       { data },
-      this.requestConfig(options),
+      this.requestConfig(options)
     );
   }
 
@@ -47,7 +47,7 @@ export class MomentsModule {
           owner_uid: input.ownerUid,
         },
       },
-      this.requestConfig(options),
+      this.requestConfig(options)
     );
   }
 
@@ -59,7 +59,7 @@ export class MomentsModule {
     return this.http.post<GetMomentViewsResponse>(
       `${LOCKET_API_BASE_URL}/getMomentViews`,
       { data: { moment_uid: momentUid } },
-      this.requestConfig(options),
+      this.requestConfig(options)
     );
   }
 
@@ -72,7 +72,7 @@ export class MomentsModule {
           reaction: input.reaction,
         },
       },
-      this.requestConfig(options),
+      this.requestConfig(options)
     );
   }
 

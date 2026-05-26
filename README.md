@@ -90,7 +90,10 @@ const feed: GetLatestMomentsResponse = await locket.getLatestMoments(friends);
 // 3) React to the first one with any text (emoji or plain text)
 const moment = feed.result.data[0];
 if (moment) {
-  const res: ReactToMomentResponse = await locket.react(moment.canonical_uid, "Nice!");
+  const res: ReactToMomentResponse = await locket.react(
+    moment.canonical_uid,
+    "Nice!"
+  );
   if (res.result.status !== 200) {
     console.warn("react failed:", res.result.errors);
   }
@@ -259,7 +262,10 @@ Returns **both raw bodies**. The session is populated; `uid` is extracted from
 the resulting JWT.
 
 ```ts
-const { phone, identity } = await locket.signInWithPhone("+66xxxxxxxxx", "password");
+const { phone, identity } = await locket.signInWithPhone(
+  "+66xxxxxxxxx",
+  "password"
+);
 
 phone.result.token; // raw Firebase custom token
 identity.idToken; // Bearer token
@@ -459,7 +465,7 @@ moment only from your own feed.
 ```ts
 const res = await locket.deleteMoment(
   "mKPhGseit5sdWTotqoIr",
-  "4YUPPNLIobR0ieQnH1V8DU7ZCVq1", // owner UID — usually your own
+  "4YUPPNLIobR0ieQnH1V8DU7ZCVq1" // owner UID — usually your own
 );
 ```
 

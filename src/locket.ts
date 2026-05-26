@@ -1,5 +1,4 @@
 import { HttpClient } from "./http";
-import { SessionStore } from "./session";
 import {
   AuthModule,
   AuthModuleOptions,
@@ -9,6 +8,7 @@ import {
   MomentsModule,
   UsersModule,
 } from "./modules";
+import { SessionStore } from "./session";
 import type {
   AccountInfoUser,
   AuthSession,
@@ -19,13 +19,13 @@ import type {
   RefreshTokenResponse,
   VerifyCustomTokenResponse,
 } from "./types/auth";
-import type { FetchUserResponse, Friend } from "./types/user";
 import type {
   DeleteMomentResponse,
   GetLatestMomentsResponse,
   GetMomentViewsResponse,
   ReactToMomentResponse,
 } from "./types/moment";
+import type { FetchUserResponse, Friend } from "./types/user";
 export interface LocketOptions {
   /** Pre-existing session (e.g. restored from disk). */
   session?: AuthSession;
@@ -81,7 +81,11 @@ export class Locket {
     this.authModule = new AuthModule(this.http, this.session, options.auth);
     this.momentsModule = new MomentsModule(this.http);
     this.usersModule = new UsersModule(this.http);
-    this.friendsModule = new FriendsModule(this.http, this.session, options.friends);
+    this.friendsModule = new FriendsModule(
+      this.http,
+      this.session,
+      options.friends
+    );
   }
 
   // ───── Session helpers ─────────────────────────────────────────────
@@ -113,7 +117,10 @@ export class Locket {
    * Returns the full upstream body (kind, localId, email, idToken, refreshToken, …)
    * and populates the session.
    */
-  async signInWithEmail(email: string, password: string): Promise<EmailSignInResponse> {
+  async signInWithEmail(
+    email: string,
+    password: string
+  ): Promise<EmailSignInResponse> {
     return this.authModule.signInWithEmail({ email, password });
   }
 
@@ -125,7 +132,10 @@ export class Locket {
    *
    * Throws `LocketError` if the inner `phone.result.status` is not 200.
    */
-  async signInWithPhone(phone: string, password: string): Promise<PhoneSignInResult> {
+  async signInWithPhone(
+    phone: string,
+    password: string
+  ): Promise<PhoneSignInResult> {
     return this.authModule.signInWithPhone({ phone, password });
   }
 
@@ -133,7 +143,10 @@ export class Locket {
    * Low-level: call `/signInWithPhonePassword` only and return the raw body.
    * Useful if you want to handle the custom-token exchange yourself.
    */
-  async signInWithPhonePassword(phone: string, password: string): Promise<PhoneSignInResponse> {
+  async signInWithPhonePassword(
+    phone: string,
+    password: string
+  ): Promise<PhoneSignInResponse> {
     return this.authModule.signInWithPhonePassword({ phone, password });
   }
 
@@ -141,7 +154,9 @@ export class Locket {
    * Exchange a Firebase custom token for `idToken` + `refreshToken`
    * (`verifyCustomToken`). Does NOT touch the session.
    */
-  async exchangeCustomToken(customToken: string): Promise<VerifyCustomTokenResponse> {
+  async exchangeCustomToken(
+    customToken: string
+  ): Promise<VerifyCustomTokenResponse> {
     return this.authModule.exchangeCustomToken(customToken);
   }
 
@@ -173,7 +188,7 @@ export class Locket {
    */
   async getLatestMoments(
     users?: string[],
-    options: GetLatestMomentsOptions = {},
+    options: GetLatestMomentsOptions = {}
   ): Promise<GetLatestMomentsResponse> {
     return this.momentsModule.getLatest({ users, ...options });
   }
@@ -183,7 +198,10 @@ export class Locket {
    * Returns `{ result: { data?: [momentUid], errors?: [...], status } }` —
    * inspect `result.status === 200` for success.
    */
-  async react(momentUid: string, reaction: string): Promise<ReactToMomentResponse> {
+  async react(
+    momentUid: string,
+    reaction: string
+  ): Promise<ReactToMomentResponse> {
     return this.momentsModule.react({ momentUid, reaction });
   }
 
@@ -215,7 +233,7 @@ export class Locket {
   async deleteMoment(
     momentUid: string,
     ownerUid: string,
-    deleteGlobally = true,
+    deleteGlobally = true
   ): Promise<DeleteMomentResponse> {
     return this.momentsModule.delete({
       momentUid,

@@ -13,7 +13,7 @@ export class UsersModule {
     return this.http.post<FetchUserResponse>(
       `${LOCKET_API_BASE_URL}/fetchUserV2`,
       { data: { user_uid: input.userUid } },
-      this.requestConfig(options),
+      this.requestConfig(options)
     );
   }
 

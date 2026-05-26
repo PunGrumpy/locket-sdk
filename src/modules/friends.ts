@@ -37,7 +37,9 @@ function parseFriendDocument(doc: FriendDocument): Friend {
   const uid = doc.fields?.user?.stringValue ?? doc.name.split("/").pop() ?? "";
   return {
     uid,
-    sharedHistoryOn: parseTimestamp(doc.fields?.shared_history_on?.timestampValue),
+    sharedHistoryOn: parseTimestamp(
+      doc.fields?.shared_history_on?.timestampValue
+    ),
     createdAt: parseTimestamp(doc.createTime),
     updatedAt: parseTimestamp(doc.updateTime),
   };
@@ -49,7 +51,7 @@ export class FriendsModule {
   constructor(
     private readonly http: HttpClient,
     private readonly session: SessionStore,
-    options: FriendsModuleOptions = {},
+    options: FriendsModuleOptions = {}
   ) {
     this.projectId = options.projectId ?? LOCKET_FIREBASE_PROJECT_ID;
   }
@@ -71,7 +73,10 @@ export class FriendsModule {
   }
 
   /** Flat list of friend UIDs. */
-  async listUids(userUid?: string, options?: RequestOptions): Promise<string[]> {
+  async listUids(
+    userUid?: string,
+    options?: RequestOptions
+  ): Promise<string[]> {
     const response = await this.listRaw(userUid, options);
     if (!response.documents) return [];
     return response.documents
@@ -83,7 +88,10 @@ export class FriendsModule {
    * Parsed friend list — each entry has `uid`, `sharedHistoryOn`,
    * `createdAt`, `updatedAt` as proper `Date` objects.
    */
-  async listDetailed(userUid?: string, options?: RequestOptions): Promise<Friend[]> {
+  async listDetailed(
+    userUid?: string,
+    options?: RequestOptions
+  ): Promise<Friend[]> {
     const response = await this.listRaw(userUid, options);
     return (response.documents ?? []).map(parseFriendDocument);
   }
