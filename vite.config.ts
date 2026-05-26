@@ -18,6 +18,6 @@ export default defineConfig({
   fmt: {
     semi: true,
     singleQuote: false,
-    ignorePatterns: [".turbo", "node_modules", "dist", "build", "bun.lock*"],
+    ignorePatterns: ["dist", "build", "node_modules", "bun.lock*"],
   },
 });
