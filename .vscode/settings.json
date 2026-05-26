@@ -5,7 +5,6 @@
   "emmet.showExpandedAbbreviation": "never",
   "js/ts.tsdk.path": "node_modules/typescript/lib",
   "js/ts.tsdk.promptToUseWorkspaceVersion": true,
-  "oxc.fmt.configPath": "./vite.config.ts",
   "[css]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
