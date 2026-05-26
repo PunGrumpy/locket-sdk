@@ -42,16 +42,10 @@ async function main(): Promise<void> {
 
   // 1) Sign in ──────────────────────────────────────────────────────────
   if (EMAIL) {
-    const res: EmailSignInResponse = await locket.signInWithEmail(
-      EMAIL,
-      PASSWORD
-    );
+    const res: EmailSignInResponse = await locket.signInWithEmail(EMAIL, PASSWORD);
     dump("signInWithEmail", res);
   } else if (PHONE) {
-    const res: PhoneSignInResult = await locket.signInWithPhone(
-      PHONE,
-      PASSWORD
-    );
+    const res: PhoneSignInResult = await locket.signInWithPhone(PHONE, PASSWORD);
     dump("signInWithPhone", res);
   } else {
     console.log("No credentials set in playground.ts — exiting.");
@@ -86,17 +80,13 @@ async function main(): Promise<void> {
     dump(`fetchUser(${friends[0]!.uid})`, userRes);
 
     // 5) getLatestMoments ───────────────────────────────────────────────
-    const feed: GetLatestMomentsResponse = await locket.getLatestMoments(
-      friends.map((f) => f.uid)
-    );
+    const feed: GetLatestMomentsResponse = await locket.getLatestMoments(friends.map((f) => f.uid));
     dump("getLatestMoments", feed);
 
     // 6) getMomentViews (Locket Gold — expect 401 on a friend's moment) ──
     const moment = feed.result.data[0];
     if (moment) {
-      const views: GetMomentViewsResponse = await locket.getMomentViews(
-        moment.canonical_uid
-      );
+      const views: GetMomentViewsResponse = await locket.getMomentViews(moment.canonical_uid);
       dump(`getMomentViews(${moment.canonical_uid})`, views);
     }
 
@@ -119,9 +109,7 @@ async function main(): Promise<void> {
     void (null as unknown as VerifyCustomTokenResponse);
   } catch (err) {
     if (err instanceof LocketError) {
-      console.error(
-        `\n❌ LocketError ${err.status ?? "—"} (${err.code ?? "—"}): ${err.message}`
-      );
+      console.error(`\n❌ LocketError ${err.status ?? "—"} (${err.code ?? "—"}): ${err.message}`);
       if (err.response) dump("err.response", err.response);
     } else {
       throw err;

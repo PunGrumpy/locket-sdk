@@ -13,12 +13,12 @@ export class UsersModule {
     return this.http.post<FetchUserResponse>(
       `${LOCKET_API_BASE_URL}/fetchUserV2`,
       { data: { user_uid: input.userUid } },
-      this.requestConfig(options)
+      this.requestConfig(options),
     );
   }
 
   private requestConfig(options?: RequestOptions) {
-    const headers: Record<string, string> = { ...(options?.headers ?? {}) };
+    const headers: Record<string, string> = { ...options?.headers };
     if (options?.token) headers.Authorization = `Bearer ${options.token}`;
     return { headers, signal: options?.signal } as const;
   }
