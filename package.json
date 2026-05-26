@@ -32,6 +32,7 @@
     "start": "tsx examples/playground.ts",
     "build": "vp pack",
     "build:watch": "vp pack --watch",
+    "test": "vp test",
     "check": "vp check",
     "fix": "vp check --fix",
     "clean": "rm -rf dist",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.41",
+    "@vitest/coverage-v8": "^4.1.7",
     "tsx": "^4.7.0",
     "typescript": "^5.4.0",
     "vite-plus": "latest"
