@@ -18,7 +18,7 @@ export class UsersModule {
   }
 
   private requestConfig(options?: RequestOptions) {
-    const headers: Record<string, string> = { ...(options?.headers ?? {}) };
+    const headers: Record<string, string> = { ...options?.headers };
     if (options?.token) headers.Authorization = `Bearer ${options.token}`;
     return { headers, signal: options?.signal } as const;
   }

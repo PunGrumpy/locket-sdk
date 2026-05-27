@@ -95,9 +95,7 @@ export class AuthModule {
    * Low-level: call `POST /signInWithPhonePassword` only and return the raw body.
    * Useful if you want to handle the custom-token exchange yourself.
    */
-  async signInWithPhonePassword(
-    input: SignInWithPhoneInput,
-  ): Promise<PhoneSignInResponse> {
+  async signInWithPhonePassword(input: SignInWithPhoneInput): Promise<PhoneSignInResponse> {
     return this.http.post<PhoneSignInResponse>(
       `${LOCKET_API_BASE_URL}/signInWithPhonePassword`,
       { data: { phone: input.phone, password: input.password } },
@@ -109,9 +107,7 @@ export class AuthModule {
    * Sign in directly through Firebase email/password (`verifyPassword`).
    * Populates the session and returns the full Firebase response body.
    */
-  async signInWithEmail(
-    input: SignInWithEmailInput,
-  ): Promise<EmailSignInResponse> {
+  async signInWithEmail(input: SignInWithEmailInput): Promise<EmailSignInResponse> {
     const response = await this.http.post<EmailSignInResponse>(
       `${GOOGLE_IDENTITY_TOOLKIT_URL}/verifyPassword`,
       {
@@ -142,9 +138,7 @@ export class AuthModule {
    * Exchange a Firebase custom token for an `idToken` + `refreshToken`.
    * Does NOT touch the session — caller decides what to do with the result.
    */
-  async exchangeCustomToken(
-    customToken: string,
-  ): Promise<VerifyCustomTokenResponse> {
+  async exchangeCustomToken(customToken: string): Promise<VerifyCustomTokenResponse> {
     return this.http.post<VerifyCustomTokenResponse>(
       `${GOOGLE_IDENTITY_TOOLKIT_URL}/verifyCustomToken`,
       { token: customToken, returnSecureToken: true },

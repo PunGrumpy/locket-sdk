@@ -6,9 +6,9 @@ import type { ProtobufInt64 } from "./types/common";
  * use only to extract claims like `user_id` from a token you already trust.
  */
 export function decodeJwtPayload<T = Record<string, unknown>>(token: string): T {
-  const segments = token.split(".");
-  if (segments.length < 2) throw new Error("Invalid JWT: not enough segments");
-  const b64 = segments[1].replace(/-/g, "+").replace(/_/g, "/");
+  const [, payloadSegment] = token.split(".");
+  if (!payloadSegment) throw new Error("Invalid JWT: not enough segments");
+  const b64 = payloadSegment.replace(/-/g, "+").replace(/_/g, "/");
   const padded = b64 + "=".repeat((4 - (b64.length % 4)) % 4);
   const json =
     typeof Buffer !== "undefined"

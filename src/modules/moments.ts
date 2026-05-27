@@ -1,5 +1,6 @@
 import { LOCKET_API_BASE_URL } from "../constants";
 import { HttpClient } from "../http";
+import type { RequestOptions } from "../types/common";
 import type {
   DeleteMomentInput,
   DeleteMomentResponse,
@@ -9,7 +10,6 @@ import type {
   ReactToMomentInput,
   ReactToMomentResponse,
 } from "../types/moment";
-import type { RequestOptions } from "../types/common";
 import { int64 } from "../utils";
 
 export class MomentsModule {
@@ -77,7 +77,7 @@ export class MomentsModule {
   }
 
   private requestConfig(options?: RequestOptions) {
-    const headers: Record<string, string> = { ...(options?.headers ?? {}) };
+    const headers: Record<string, string> = { ...options?.headers };
     if (options?.token) headers.Authorization = `Bearer ${options.token}`;
     return { headers, signal: options?.signal } as const;
   }
