@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "locket-api": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1"
   }
 }
