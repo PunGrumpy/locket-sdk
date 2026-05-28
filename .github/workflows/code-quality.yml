@@ -1,0 +1,45 @@
+name: Code Quality
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Lint
+            command: vp run check
+          - name: Typecheck
+            command: vp run typecheck
+          - name: Test
+            command: vp run test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Setup Vite+
+        uses: voidzero-dev/setup-vp@v1
+        with:
+          cache: true
+      - name: Install dependencies
+        run: vp install
+      - name: Build
+        if: ${{ matrix.name == 'Test' }}
+        run: vp run build
+      - name: Run ${{ matrix.name }}
+        env:
+          CI: true
+        run: ${{ matrix.command }}

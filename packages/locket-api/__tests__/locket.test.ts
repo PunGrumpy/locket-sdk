@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vite-plus/test";
 import { Locket } from "../src/locket";
 import { SessionStore } from "../src/session";
 import type { AuthSession } from "../src/types/auth";

@@ -1,0 +1,57 @@
+{
+  "name": "locket-api",
+  "version": "1.0.0",
+  "description": "Unofficial TypeScript SDK for the Locket Camera (1020x1020) API",
+  "keywords": [
+    "locket",
+    "locket-api",
+    "locket-camera",
+    "locket-sdk",
+    "social",
+    "typescript",
+    "widget"
+  ],
+  "homepage": "https://github.com/jumpogpo/locket-api#readme",
+  "bugs": {
+    "url": "https://github.com/jumpogpo/locket-api/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Thanapat Koedpiam",
+    "url": "https://thanapat-kp.com"
+  },
+  "contributors": [
+    {
+      "name": "Noppakorn Kaewsalabnil",
+      "url": "https://www.pungrumpy.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jumpogpo/locket-api.git",
+    "directory": "packages/locket-api"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.mts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "vp pack",
+    "dev": "vp pack --watch",
+    "test": "vp test",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "axios": "^1.16.1"
+  }
+}

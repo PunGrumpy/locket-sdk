@@ -23,7 +23,7 @@ import {
   type ReactToMomentResponse,
   type RefreshTokenResponse,
   type VerifyCustomTokenResponse,
-} from "../src";
+} from "locket-api";
 
 // ───── Credentials ─────────────────────────────────────────────────────
 // Fill in either email + password OR phone + password.
@@ -40,22 +40,21 @@ function dump(label: string, value: unknown): void {
 async function main(): Promise<void> {
   const locket: Locket = new Locket();
 
-  // 1) Sign in ──────────────────────────────────────────────────────────
-  if (EMAIL) {
-    const res: EmailSignInResponse = await locket.signInWithEmail(EMAIL, PASSWORD);
-    dump("signInWithEmail", res);
-  } else if (PHONE) {
-    const res: PhoneSignInResult = await locket.signInWithPhone(PHONE, PASSWORD);
-    dump("signInWithPhone", res);
-  } else {
-    console.log("No credentials set in playground.ts — exiting.");
-    return;
-  }
-
-  const session: AuthSession | null = locket.getSession();
-  dump("session", session);
-
   try {
+    // 1) Sign in ──────────────────────────────────────────────────────────
+    if (EMAIL) {
+      const res: EmailSignInResponse = await locket.signInWithEmail(EMAIL, PASSWORD);
+      dump("signInWithEmail", res);
+    } else if (PHONE) {
+      const res: PhoneSignInResult = await locket.signInWithPhone(PHONE, PASSWORD);
+      dump("signInWithPhone", res);
+    } else {
+      console.log("No credentials set in playground.ts — exiting.");
+      return;
+    }
+
+    const session: AuthSession | null = locket.getSession();
+    dump("session", session);
     // 2) Account info ───────────────────────────────────────────────────
     const accountInfo: GetAccountInfoResponse = await locket.getAccountInfo();
     dump("getAccountInfo", accountInfo);
