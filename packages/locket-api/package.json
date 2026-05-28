@@ -26,6 +26,11 @@
       "url": "https://www.pungrumpy.com"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jumpogpo/locket-api.git",
+    "directory": "packages/locket-api"
+  },
   "files": [
     "dist",
     "README.md",
