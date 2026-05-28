@@ -1,11 +1,8 @@
 import { defineConfig } from "vite-plus";
 
 export default defineConfig({
-  pack: {
-    entry: ["src/index.ts"],
-    dts: true,
-    format: ["esm"],
-    clean: true,
+  run: {
+    cache: true,
   },
   staged: {
     "*": "vp check --fix",

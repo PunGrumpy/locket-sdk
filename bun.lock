@@ -4,20 +4,34 @@
   "workspaces": {
     "": {
       "name": "locket-api",
+      "devDependencies": {
+        "@vitest/coverage-v8": "^4.1.7",
+        "typescript": "^5.4.0",
+        "vite-plus": "catalog:",
+      },
+    },
+    "apps/playground": {
+      "name": "playground",
+      "version": "1.0.0",
+      "dependencies": {
+        "locket-api": "workspace:*",
+      },
+    },
+    "packages/locket-api": {
+      "name": "locket-api",
+      "version": "1.0.0",
       "dependencies": {
         "axios": "^1.7.0",
-      },
-      "devDependencies": {
-        "@types/node": "^20.19.41",
-        "@vitest/coverage-v8": "^4.1.7",
-        "tsx": "^4.7.0",
-        "typescript": "^5.4.0",
-        "vite-plus": "latest",
       },
     },
   },
   "overrides": {
+    "vite": "catalog:",
+    "vitest": "catalog:",
+  },
+  "catalog": {
     "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vite-plus": "latest",
     "vitest": "npm:@voidzero-dev/vite-plus-test@latest",
   },
   "packages": {
@@ -319,6 +333,8 @@
 
     "lightningcss-win32-x64-msvc": ["lightningcss-win32-x64-msvc@1.32.0", "", { "os": "win32", "cpu": "x64" }, "sha512-Amq9B/SoZYdDi1kFrojnoqPLxYhQ4Wo5XiL8EVJrVsB8ARoC1PWW6VGtT0WKCemjy8aC+louJnjS7U18x3b06Q=="],
 
+    "locket-api": ["locket-api@workspace:packages/locket-api"],
+
     "magicast": ["magicast@0.5.3", "", { "dependencies": { "@babel/parser": "^7.29.3", "@babel/types": "^7.29.0", "source-map-js": "^1.2.1" } }, "sha512-pVKE4UdSQ7DvHzivsCIFx2BJn1mHG6KsyrFcaxFx6tONdneEuThrDx0Cj3AMg58KyN4pzYT+LHOotxDQDjNvkw=="],
 
     "make-dir": ["make-dir@4.0.0", "", { "dependencies": { "semver": "^7.5.3" } }, "sha512-hXdUTZYIVOt1Ex//jAQi+wTZZpUpwBj/0QsOzqegb3rGMMeJiSEu5xLHnYfBrRV4RH2+OCSOO95Is/7x1WJ4bw=="],
@@ -348,6 +364,8 @@
     "picomatch": ["picomatch@4.0.4", "", {}, "sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A=="],
 
     "pixelmatch": ["pixelmatch@7.2.0", "", { "dependencies": { "pngjs": "^7.0.0" }, "bin": { "pixelmatch": "bin/pixelmatch" } }, "sha512-xhcb4yHu9sM/G7foGzoLtXYcC0zHEaOXXjRKhGup0fw78Nf2Tkiapv4EQyMzrbcmQPsllAI7DbFY2UT7PlI9Pg=="],
+
+    "playground": ["playground@workspace:apps/playground"],
 
     "pngjs": ["pngjs@7.0.0", "", {}, "sha512-LKWqWJRhstyYo9pGvgor/ivk2w94eSjE3RGVuzLGlr3NmD8bf7RcYGze1mNdEHRP6TRP6rMuDHk5t44hnTRyow=="],
 
