@@ -75,7 +75,7 @@ describe("HttpClient", () => {
       expect(data).toEqual({ result: "success" });
       expect(tokenProvider.getIdToken).toHaveBeenCalled();
 
-      const calledConfig = mockAdapter.mock.calls[0][0];
+      const calledConfig = mockAdapter.mock.calls[0]![0];
       // Headers can be accessed via config.headers.get("Authorization") or config.headers.Authorization
       expect(calledConfig.headers.Authorization).toBe("Bearer mock-id-token");
     });
@@ -99,7 +99,7 @@ describe("HttpClient", () => {
 
       await client.get("/test", { adapter: mockAdapter });
 
-      const calledConfig = mockAdapter.mock.calls[0][0];
+      const calledConfig = mockAdapter.mock.calls[0]![0];
       expect(calledConfig.headers.Authorization).toBeUndefined();
     });
 
@@ -122,7 +122,7 @@ describe("HttpClient", () => {
 
       await client.get("/test", { skipAuth: true, adapter: mockAdapter });
 
-      const calledConfig = mockAdapter.mock.calls[0][0];
+      const calledConfig = mockAdapter.mock.calls[0]![0];
       expect(calledConfig.headers.Authorization).toBeUndefined();
     });
 
@@ -148,7 +148,7 @@ describe("HttpClient", () => {
         adapter: mockAdapter,
       });
 
-      const calledConfig = mockAdapter.mock.calls[0][0];
+      const calledConfig = mockAdapter.mock.calls[0]![0];
       expect(calledConfig.headers.Authorization).toBe("Bearer pre-existing-token");
     });
   });
@@ -223,7 +223,7 @@ describe("HttpClient", () => {
       const data = await client.post("/items", body, { adapter: mockAdapter });
 
       expect(data).toEqual({ created: true });
-      const calledConfig = mockAdapter.mock.calls[0][0];
+      const calledConfig = mockAdapter.mock.calls[0]![0];
       expect(calledConfig.method?.toLowerCase()).toBe("post");
       expect(JSON.parse(calledConfig.data)).toEqual(body);
     });
@@ -244,7 +244,7 @@ describe("HttpClient", () => {
       const data = await client.put("/items/1", body, { adapter: mockAdapter });
 
       expect(data).toEqual({ updated: true });
-      const calledConfig = mockAdapter.mock.calls[0][0];
+      const calledConfig = mockAdapter.mock.calls[0]![0];
       expect(calledConfig.method?.toLowerCase()).toBe("put");
       expect(JSON.parse(calledConfig.data)).toEqual(body);
     });
