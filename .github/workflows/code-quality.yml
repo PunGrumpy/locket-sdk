@@ -37,7 +37,7 @@ jobs:
       - name: Install dependencies
         run: vp install
       - name: Build
-        if: ${{ matrix.name == 'Test' }}
+        if: ${{ matrix.name != 'Lint' }}
         run: vp run build
       - name: Run ${{ matrix.name }}
         env:
