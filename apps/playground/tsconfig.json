@@ -2,8 +2,7 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "types": ["node"],
-    "strictNullChecks": true,
-    "baseUrl": "."
+    "strictNullChecks": true
   },
   "include": ["index.ts"]
 }
