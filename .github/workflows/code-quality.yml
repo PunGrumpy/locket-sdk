@@ -1,0 +1,48 @@
+name: Code Quality
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Lint
+            command: bun run lint
+          - name: Typecheck
+            command: bun run typecheck
+          - name: Test
+            command: bun run test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Install bun
+        uses: oven-sh/setup-bun@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: bun
+      - name: Install dependencies
+        run: bun install
+      - name: Build
+        if: ${{ matrix.name == 'Test' }}
+        run: bun run build
+      - name: Run ${{ matrix.name }}
+        env:
+          CI: true
+        run: ${{ matrix.command }}
