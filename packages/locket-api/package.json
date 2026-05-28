@@ -11,7 +11,21 @@
     "typescript",
     "widget"
   ],
+  "homepage": "https://github.com/jumpogpo/locket-api#readme",
+  "bugs": {
+    "url": "https://github.com/jumpogpo/locket-api/issues"
+  },
   "license": "MIT",
+  "author": {
+    "name": "Thanapat Koedpiam",
+    "url": "https://thanapat-kp.com"
+  },
+  "contributors": [
+    {
+      "name": "Noppakorn Kaewsalabnil",
+      "url": "https://www.pungrumpy.com"
+    }
+  ],
   "files": [
     "dist",
     "README.md",
